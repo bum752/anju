@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import './config/axiosConfig';
 
 declare global {
   interface Window {
     kakao: any;
   }
+}
 
 ReactDOM.render(
   <React.StrictMode>
