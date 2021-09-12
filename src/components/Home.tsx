@@ -28,7 +28,7 @@ const Home = () => {
             <Col md={{ span: 4 }} sm={{ span: 24 }}>
               <Text style={{ color: 'white' }}>ㅇㄴㅇㅈㅁㄱ, 오늘안주머고?</Text>
             </Col>
-            <Col md={{ span: 8, offset: 8 }} sm={{ span: 24 }} style={{ color: 'white' }}>
+            <Col md={{ span: 8, offset: 8 }} xs={{ span: 0 }} style={{ color: 'white' }}>
               {selectedCookingMethodFilter.map((cookingMethod, index) => {
                 return (
                   <Tag color="geekblue" key={index}>
@@ -53,7 +53,7 @@ const Home = () => {
                 );
               })}
             </Col>
-            <Col md={{ span: 4 }} sm={{ span: 24 }}>
+            <Col md={{ span: 4 }} xs={{ span: 0 }}>
               <Popover placement="bottomRight" title="어떤 안주가 땡기니?" content={<Filter />}>
                 <Button>어떤 안주가 땡기니?</Button>
               </Popover>
