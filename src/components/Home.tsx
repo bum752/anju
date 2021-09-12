@@ -1,4 +1,4 @@
-import { Button, Col, Layout, Popover, Row, Tag, Typography } from 'antd';
+import { Affix, Badge, Button, Col, Layout, Popover, Row, Tag, Typography } from 'antd';
 import Map from './Map';
 import Store from './Store';
 import Filter from './Filter';
@@ -9,6 +9,7 @@ import { useRecoilState } from 'recoil';
 import { cookingMethodFilter, ingredientFilter, sourceFilter } from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
 import { storeSiderComponentCollapseState } from '../state/componentState';
+import { FilterOutlined } from '@ant-design/icons';
 
 const { Header, Content, Sider } = Layout;
 const { Text } = Typography;
@@ -19,6 +20,8 @@ const Home = () => {
   const [selectedSourceFilter] = useRecoilState(sourceFilter);
   const [selectedStore] = useRecoilState(selectedStoreState);
   const [storeComponentCollapse, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
+
+  const selectedTotalFiltersCount = selectedCookingMethodFilter.length + selectedIngredientFilter.length + selectedSourceFilter.length;
 
   return (
     <>
@@ -80,6 +83,14 @@ const Home = () => {
           </Content>
         </Layout>
       </Layout>
+
+      <Affix offsetBottom={20} style={{ position: 'absolute', right: '20px' }}>
+        <Badge count={selectedTotalFiltersCount} color={'cyan'}>
+          <Popover placement="bottomRight" title="어떤 안주가 땡기니?" content={<Filter />} trigger={['hover', 'click']}>
+            <Button type={'ghost'} ghost={true} shape={'circle'} icon={<FilterOutlined />} style={{ background: 'navy' }} />
+          </Popover>
+        </Badge>
+      </Affix>
     </>
   );
 };
