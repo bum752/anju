@@ -7,7 +7,7 @@ import sourceCode from '../constants/sourceCode';
 import moneyFormatter from '../formatters/moneyFormatter';
 import { storeSiderComponentCollapseState } from '../state/componentState';
 import { selectedStoreState } from '../state/storeState';
-import { menu } from '../types/store';
+import { menu, ingredient } from '../types/store';
 
 const Store = () => {
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
@@ -38,10 +38,18 @@ const Store = () => {
         dataSource={menus}
         renderItem={(item: menu) => (
           <List.Item>
-            <List.Item.Meta title={`${item.foodName} (${moneyFormatter(item.price)})`} description={item.characteristic} />
-            <Tag color="geekblue">{cookingMethodCode[item.method].description}</Tag>
-            <Tag color="green">{ingredientCode[item.ingredient].description}</Tag>
-            <Tag color="volcano">{sourceCode[item.base].description}</Tag>
+            <List.Item.Meta title={`${item.name} (${moneyFormatter(item.price)})`} description={item.characteristic} />
+            <div style={{ display: 'grid' }}>
+              <Tag color="geekblue">{cookingMethodCode[item.method].description}</Tag>
+              {item.ingredients.map((ingredient: ingredient, index: number) => {
+                return (
+                  <Tag key={index} color="green">
+                    {ingredient.name}
+                  </Tag>
+                );
+              })}
+              <Tag color="volcano">{sourceCode[item.base].description}</Tag>
+            </div>
           </List.Item>
         )}
       />

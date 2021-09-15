@@ -1,8 +1,13 @@
+export type ingredient = {
+  id: number;
+  name: string;
+}
+
 export type menu = {
-  foodName: string;
+  name: string;
   base: string;
   method: string;
-  ingredient: string;
+  ingredients: ingredient[];
   characteristic: string;
   price: number;
 };
