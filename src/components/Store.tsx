@@ -1,8 +1,7 @@
-import { CloseCircleOutlined, FlagFilled, FlagOutlined, FlagTwoTone } from '@ant-design/icons';
-import { List, Rate, Table, Tag, Typography } from 'antd';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { CloseCircleOutlined, FlagOutlined, FlagTwoTone } from '@ant-design/icons';
+import { List, Rate, Tag, Typography } from 'antd';
+import { useRecoilState } from 'recoil';
 import cookingMethodCode from '../constants/cookingMethodCode';
-import ingredientCode from '../constants/ingredientCode';
 import sourceCode from '../constants/sourceCode';
 import moneyFormatter from '../formatters/moneyFormatter';
 import { storeSiderComponentCollapseState } from '../state/componentState';
