@@ -18,7 +18,7 @@ const Store = () => {
     setStoreComponentCollapse(true);
   };
 
-  const { name, description, menus, point, visited } = selectedStore || {};
+  const { name, description, address, menus, point, visited } = selectedStore || {};
 
   return (
     <>
@@ -31,6 +31,8 @@ const Store = () => {
       <Typography.Title level={2}>
         {visited ? <FlagOutlined /> : <FlagTwoTone twoToneColor={'navy'} />} {name}
       </Typography.Title>
+
+      <span>{address}</span>
 
       <p>{description}</p>
 

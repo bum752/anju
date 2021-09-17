@@ -16,6 +16,7 @@ export type store = {
   _id: string;
   name: string;
   description: string;
+  address: string;
   menus: menu[];
   latitude: number;
   longitude: number;
