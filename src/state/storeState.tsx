@@ -1,13 +1,17 @@
 import axios from 'axios';
-import { atom, selector } from 'recoil';
+import { atom, selectorFamily } from 'recoil';
 import { store } from '../types/store';
 
-export const storesState = selector<store[]>({
+export const storesState = selectorFamily<store[], number[]>({
   key: 'retrieveStoresSelector',
-  get: async ({ get }) => {
-    const response = await axios.get('/stores');
+  get: (mapBounds: number[]) => async () => {
+    if (mapBounds.length === 4) {
+      const response = await axios.get('/stores', { params: { geoBoundary: mapBounds.join(',') } });
 
-    return response.data;
+      return response.data;
+    }
+
+    return [];
   },
 });
 
