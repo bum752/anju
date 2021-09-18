@@ -22,7 +22,6 @@ const Map = ({ height }: IMap) => {
   const [, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
 
   const refreshMapBounds = (map: any) => {
-    console.log('### map', map);
     const bounds = map.getBounds();
     const southWest = bounds.getSouthWest();
     const northEast = bounds.getNorthEast();

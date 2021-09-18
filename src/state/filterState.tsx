@@ -1,12 +1,12 @@
 import { atom } from 'recoil';
 
-export const cookingMethodFilter = atom<string[]>({
-  key: 'cookingMethodFilter',
-  default: [],
+export const ingredientSearchKeyword = atom<string>({
+  key: 'ingredientSearchKeyword',
+  default: '',
 });
 
-export const ingredientFilter = atom<string[]>({
-  key: 'ingredientFilter',
+export const cookingMethodFilter = atom<string[]>({
+  key: 'cookingMethodFilter',
   default: [],
 });
 

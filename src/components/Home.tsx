@@ -3,10 +3,9 @@ import Map from './Map';
 import Store from './Store';
 import Filter from './Filter';
 import cookingMethodCode from '../constants/cookingMethodCode';
-import ingredientCode from '../constants/ingredientCode';
 import sourceCode from '../constants/sourceCode';
 import { useRecoilState } from 'recoil';
-import { cookingMethodFilter, ingredientFilter, sourceFilter } from '../state/filterState';
+import { cookingMethodFilter, ingredientSearchKeyword, sourceFilter } from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
 import { storeSiderComponentCollapseState } from '../state/componentState';
 import { FilterOutlined } from '@ant-design/icons';
@@ -16,12 +15,12 @@ const { Text } = Typography;
 
 const Home = () => {
   const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
-  const [selectedIngredientFilter] = useRecoilState(ingredientFilter);
+  const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeyword);
   const [selectedSourceFilter] = useRecoilState(sourceFilter);
   const [selectedStore] = useRecoilState(selectedStoreState);
   const [storeComponentCollapse, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
 
-  const selectedTotalFiltersCount = selectedCookingMethodFilter.length + selectedIngredientFilter.length + selectedSourceFilter.length;
+  const selectedTotalFiltersCount = enteredIngredientSearchKeyword ? 1 : 0 + selectedCookingMethodFilter.length + selectedSourceFilter.length;
 
   return (
     <>
@@ -32,18 +31,12 @@ const Home = () => {
               <Text style={{ color: 'white' }}>ㅇㄴㅇㅈㅁㄱ, 오늘안주머고?</Text>
             </Col>
             <Col md={{ span: 8, offset: 8 }} xs={{ span: 0 }} style={{ color: 'white' }}>
+              {enteredIngredientSearchKeyword && <Tag color="green">{enteredIngredientSearchKeyword}</Tag>}
+
               {selectedCookingMethodFilter.map((cookingMethod, index) => {
                 return (
                   <Tag color="geekblue" key={index}>
                     {cookingMethodCode[cookingMethod].description}
-                  </Tag>
-                );
-              })}
-
-              {selectedIngredientFilter.map((ingredient, index) => {
-                return (
-                  <Tag color="green" key={index}>
-                    {ingredientCode[ingredient].description}
                   </Tag>
                 );
               })}

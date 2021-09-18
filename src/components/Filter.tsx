@@ -1,34 +1,29 @@
-import { Checkbox, Col, Row } from 'antd';
+import { Checkbox, Col, Input, Row } from 'antd';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { useRecoilState } from 'recoil';
 import cookingMethodCode from '../constants/cookingMethodCode';
-import ingredientCode from '../constants/ingredientCode';
 import sourceCode from '../constants/sourceCode';
-import { cookingMethodFilter, ingredientFilter, sourceFilter } from '../state/filterState';
+import { cookingMethodFilter, ingredientSearchKeyword, sourceFilter } from '../state/filterState';
 
 const Filter = () => {
+  const [ingredientNameSearchKeyword, setIngredientNameSearchKeyword] = useRecoilState(ingredientSearchKeyword);
   const [, setSelectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
-  const [, setSelectedIngredientFilter] = useRecoilState(ingredientFilter);
   const [, setSelectedSourceFilter] = useRecoilState(sourceFilter);
 
   const cookingMethodOptions = Object.keys(cookingMethodCode).map((key) => {
     return { label: cookingMethodCode[key].description, value: key };
   });
 
-  const ingredientOptions = Object.keys(ingredientCode).map((key) => {
-    return { label: ingredientCode[key].description, value: key };
-  });
-
   const sourceOptions = Object.keys(sourceCode).map((key) => {
     return { label: sourceCode[key].description, value: key };
   });
 
-  const cookingMethodOptionSelectHandler = (values: CheckboxValueType[]): void => {
-    setSelectedCookingMethodFilter([...(values as string[])]);
+  const ingredientNameInputHandler = (event: React.FormEvent<HTMLInputElement>): void => {
+    setIngredientNameSearchKeyword(event.currentTarget.value);
   };
 
-  const IngredientOptionSelectHandler = (values: CheckboxValueType[]): void => {
-    setSelectedIngredientFilter([...(values as string[])]);
+  const cookingMethodOptionSelectHandler = (values: CheckboxValueType[]): void => {
+    setSelectedCookingMethodFilter([...(values as string[])]);
   };
 
   const sourceOptionSelectHandler = (values: CheckboxValueType[]): void => {
@@ -50,17 +45,16 @@ const Filter = () => {
   return (
     <>
       <Row>
+        <Col>
+          <Input placeholder={'재료를 검색해 봐!'} value={ingredientNameSearchKeyword} onChange={ingredientNameInputHandler} />
+        </Col>
+      </Row>
+      <Row>
         <Col span={8}>조리법</Col>
         <Col>
           <Checkbox.Group name={'cookingMethods'} onChange={cookingMethodOptionSelectHandler}>
             {optionsComponent(cookingMethodOptions)}
           </Checkbox.Group>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={8}>재료</Col>
-        <Col>
-          <Checkbox.Group onChange={IngredientOptionSelectHandler}>{optionsComponent(ingredientOptions)}</Checkbox.Group>
         </Col>
       </Row>
       <Row>
