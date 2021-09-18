@@ -2,11 +2,29 @@ import axios from 'axios';
 import { atom, selectorFamily } from 'recoil';
 import { store } from '../types/store';
 
-export const storesState = selectorFamily<store[], number[]>({
+type selectorMapper<Type> = {
+  [Property in keyof Type]: Type[Property];
+};
+
+interface IStoreParam {
+  mapBounds: number[];
+  ingredientName: string | null;
+  cookingMethodFilterOptionKeys: string[];
+  sourceFilterOptionKeys: string[];
+}
+
+export const storesState = selectorFamily<store[], selectorMapper<IStoreParam>>({
   key: 'retrieveStoresSelector',
-  get: (mapBounds: number[]) => async () => {
-    if (mapBounds.length === 4) {
-      const response = await axios.get('/stores', { params: { geoBoundary: mapBounds.join(',') } });
+  get: (param) => async () => {
+    if (param.mapBounds.length === 4) {
+      const response = await axios.get('/stores', {
+        params: {
+          geoBoundary: param.mapBounds.join(','),
+          ingredientName: param.ingredientName,
+          method: param.cookingMethodFilterOptionKeys.join(','),
+          base: param.sourceFilterOptionKeys.join(','),
+        },
+      });
 
       return response.data;
     }

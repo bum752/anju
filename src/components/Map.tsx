@@ -3,6 +3,7 @@ import { message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import { storeSiderComponentCollapseState } from '../state/componentState';
+import { ingredientSearchKeyword, cookingMethodFilter, sourceFilter } from '../state/filterState';
 import { selectedStoreState, storesState } from '../state/storeState';
 import { store } from '../types/store';
 
@@ -17,9 +18,24 @@ const Map = ({ height }: IMap) => {
   const [markers, setMarkers] = useState<any[]>([]);
   const [mapBoundChanged, setMapBoundChanged] = useState<boolean>(false);
   const [mapBounds, setMapBounds] = useState<number[]>([]);
-  const stores = useRecoilValueLoadable(storesState(mapBounds));
+  const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeyword);
+  const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
+  const [selectedSourceFilter] = useRecoilState(sourceFilter);
+  const stores = useRecoilValueLoadable(
+    storesState({
+      mapBounds,
+      ingredientName: enteredIngredientSearchKeyword,
+      cookingMethodFilterOptionKeys: selectedCookingMethodFilter,
+      sourceFilterOptionKeys: selectedSourceFilter,
+    })
+  );
   const [, setSelectedStore] = useRecoilState(selectedStoreState);
   const [, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
+
+  const removeAllMarkers = () => {
+    markers.forEach((marker) => marker.setMap(null));
+    setMarkers([]);
+  };
 
   const refreshMapBounds = (map: any) => {
     const bounds = map.getBounds();
@@ -55,6 +71,8 @@ const Map = ({ height }: IMap) => {
 
   useEffect(() => {
     if (stores.state === 'hasValue' && map) {
+      removeAllMarkers();
+
       const storeMarkers = stores.contents.map((store: store) => {
         const { latitude, longitude } = store;
         const markerPosition = new kakao.maps.LatLng(latitude, longitude);
@@ -87,10 +105,7 @@ const Map = ({ height }: IMap) => {
           message.destroy('refreshStoresMessage');
 
           setMapBoundChanged(false);
-          markers.forEach((marker) => {
-            marker.setMap(null);
-          });
-          setMarkers([]);
+          removeAllMarkers();
           refreshMapBounds(map);
         },
       });
