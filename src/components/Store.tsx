@@ -1,14 +1,15 @@
 import { CloseCircleOutlined, FlagOutlined, FlagTwoTone } from '@ant-design/icons';
 import { List, Rate, Tag, Typography } from 'antd';
-import { useRecoilState } from 'recoil';
-import cookingMethodCode from '../constants/cookingMethodCode';
-import sourceCode from '../constants/sourceCode';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import moneyFormatter from '../formatters/moneyFormatter';
 import { storeSiderComponentCollapseState } from '../state/componentState';
+import { cookingMethodFilterOptionsState, sourceFilterOptionsState } from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
 import { menu, ingredient } from '../types/store';
 
 const Store = () => {
+  const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
+  const sourceFilterOptions = useRecoilValueLoadable(sourceFilterOptionsState);
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
   const [, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
 
@@ -41,7 +42,9 @@ const Store = () => {
           <List.Item>
             <List.Item.Meta title={`${item.name} (${moneyFormatter(item.price)})`} description={item.characteristic} />
             <div style={{ display: 'grid' }}>
-              <Tag color="geekblue">{cookingMethodCode[item.method].description}</Tag>
+              <Tag color="geekblue">
+                {cookingMethodFilterOptions.state === 'hasValue' && cookingMethodFilterOptions.contents.filter((option) => option.key === item.method)[0].value}
+              </Tag>
               {item.ingredients.map((ingredient: ingredient, index: number) => {
                 return (
                   <Tag key={index} color="green">
@@ -49,7 +52,9 @@ const Store = () => {
                   </Tag>
                 );
               })}
-              <Tag color="volcano">{sourceCode[item.base].description}</Tag>
+              <Tag color="volcano">
+                {sourceFilterOptions.state === 'hasValue' && sourceFilterOptions.contents.filter((option) => option.key === item.base)[0].value}
+              </Tag>
             </div>
           </List.Item>
         )}

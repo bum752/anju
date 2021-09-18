@@ -2,10 +2,8 @@ import { Affix, Badge, Button, Col, Layout, Popover, Row, Tag, Typography } from
 import Map from './Map';
 import Store from './Store';
 import Filter from './Filter';
-import cookingMethodCode from '../constants/cookingMethodCode';
-import sourceCode from '../constants/sourceCode';
-import { useRecoilState } from 'recoil';
-import { cookingMethodFilter, ingredientSearchKeyword, sourceFilter } from '../state/filterState';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sourceFilter, sourceFilterOptionsState } from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
 import { storeSiderComponentCollapseState } from '../state/componentState';
 import { FilterOutlined } from '@ant-design/icons';
@@ -14,6 +12,8 @@ const { Header, Content, Sider } = Layout;
 const { Text } = Typography;
 
 const Home = () => {
+  const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
+  const sourceFilterOptions = useRecoilValueLoadable(sourceFilterOptionsState);
   const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
   const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeyword);
   const [selectedSourceFilter] = useRecoilState(sourceFilter);
@@ -36,7 +36,8 @@ const Home = () => {
               {selectedCookingMethodFilter.map((cookingMethod, index) => {
                 return (
                   <Tag color="geekblue" key={index}>
-                    {cookingMethodCode[cookingMethod].description}
+                    {cookingMethodFilterOptions.state === 'hasValue' &&
+                      cookingMethodFilterOptions.contents.filter((option) => option.key === cookingMethod)[0].value}
                   </Tag>
                 );
               })}
@@ -44,7 +45,7 @@ const Home = () => {
               {selectedSourceFilter.map((source, index) => {
                 return (
                   <Tag color="volcano" key={index}>
-                    {sourceCode[source].description}
+                    {sourceFilterOptions.state === 'hasValue' && sourceFilterOptions.contents.filter((option) => option.key === source)[0].value}
                   </Tag>
                 );
               })}

@@ -1,22 +1,15 @@
 import { Checkbox, Col, Input, Row } from 'antd';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
-import { useRecoilState } from 'recoil';
-import cookingMethodCode from '../constants/cookingMethodCode';
-import sourceCode from '../constants/sourceCode';
-import { cookingMethodFilter, ingredientSearchKeyword, sourceFilter } from '../state/filterState';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sourceFilter, sourceFilterOptionsState } from '../state/filterState';
+import { filterOption } from '../types/filter';
 
 const Filter = () => {
+  const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
+  const sourceFilterOptions = useRecoilValueLoadable(sourceFilterOptionsState);
   const [ingredientNameSearchKeyword, setIngredientNameSearchKeyword] = useRecoilState(ingredientSearchKeyword);
   const [, setSelectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
   const [, setSelectedSourceFilter] = useRecoilState(sourceFilter);
-
-  const cookingMethodOptions = Object.keys(cookingMethodCode).map((key) => {
-    return { label: cookingMethodCode[key].description, value: key };
-  });
-
-  const sourceOptions = Object.keys(sourceCode).map((key) => {
-    return { label: sourceCode[key].description, value: key };
-  });
 
   const ingredientNameInputHandler = (event: React.FormEvent<HTMLInputElement>): void => {
     setIngredientNameSearchKeyword(event.currentTarget.value);
@@ -30,12 +23,12 @@ const Filter = () => {
     setSelectedSourceFilter([...(values as string[])]);
   };
 
-  const optionsComponent = (options: { label: string; value: string }[]) => {
+  const optionsComponent = (options: filterOption[]) => {
     return options.map((option, index) => {
       return (
         <Row key={index}>
           <Col>
-            <Checkbox value={option.value}>{option.label}</Checkbox>
+            <Checkbox value={option.key}>{option.value}</Checkbox>
           </Col>
         </Row>
       );
@@ -53,14 +46,16 @@ const Filter = () => {
         <Col span={8}>조리법</Col>
         <Col>
           <Checkbox.Group name={'cookingMethods'} onChange={cookingMethodOptionSelectHandler}>
-            {optionsComponent(cookingMethodOptions)}
+            {cookingMethodFilterOptions.state === 'hasValue' && optionsComponent(cookingMethodFilterOptions.contents)}
           </Checkbox.Group>
         </Col>
       </Row>
       <Row>
         <Col span={8}>소스</Col>
         <Col>
-          <Checkbox.Group onChange={sourceOptionSelectHandler}>{optionsComponent(sourceOptions)}</Checkbox.Group>
+          <Checkbox.Group onChange={sourceOptionSelectHandler}>
+            {sourceFilterOptions.state === 'hasValue' && optionsComponent(sourceFilterOptions.contents)}
+          </Checkbox.Group>
         </Col>
       </Row>
     </>
