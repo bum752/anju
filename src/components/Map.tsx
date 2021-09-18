@@ -47,9 +47,14 @@ const Map = ({ height }: IMap) => {
   useEffect(() => {
     if (!map && kakao) {
       kakao.maps.load(() => {
+        const latestMapCenterLatLng = localStorage.getItem('latestMapCenterLatLng');
+        const centerLatLng = latestMapCenterLatLng ? JSON.parse(latestMapCenterLatLng) : [37.561201, 127.038542];
+        centerLatLng.unshift(null);
+
         const mapContainer = document.getElementById('map');
+        const center = new (Function.prototype.bind.apply(kakao.maps.LatLng, centerLatLng))();
         const option = {
-          center: new kakao.maps.LatLng(37.561201, 127.038542),
+          center,
           level: 5,
         };
         const map = new kakao.maps.Map(mapContainer, option);
@@ -103,6 +108,9 @@ const Map = ({ height }: IMap) => {
         duration: 0,
         onClick: () => {
           message.destroy('refreshStoresMessage');
+
+          const latLng = map.getCenter();
+          localStorage.setItem('latestMapCenterLatLng', JSON.stringify([latLng.getLat(), latLng.getLng()]));
 
           setMapBoundChanged(false);
           removeAllMarkers();
