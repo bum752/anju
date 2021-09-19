@@ -1,4 +1,4 @@
 export type filterOption = {
-    key: string;
-    value: string;
-}
+  id: number;
+  name: string;
+};

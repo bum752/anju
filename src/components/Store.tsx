@@ -1,15 +1,12 @@
 import { CloseCircleOutlined, FlagOutlined, FlagTwoTone } from '@ant-design/icons';
 import { List, Rate, Tag, Typography } from 'antd';
-import { useRecoilState, useRecoilValueLoadable } from 'recoil';
+import { useRecoilState } from 'recoil';
 import moneyFormatter from '../formatters/moneyFormatter';
 import { storeSiderComponentCollapseState } from '../state/componentState';
-import { cookingMethodFilterOptionsState, sauceFilterOptionsState } from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
-import { menu, ingredient } from '../types/store';
+import { menu } from '../types/store';
 
 const Store = () => {
-  const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
-  const sauceFilterOptions = useRecoilValueLoadable(sauceFilterOptionsState);
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
   const [, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
 
@@ -42,19 +39,23 @@ const Store = () => {
           <List.Item>
             <List.Item.Meta title={`${item.name} (${moneyFormatter(item.price)})`} description={item.characteristic} />
             <div style={{ display: 'grid' }}>
-              <Tag color="geekblue">
-                {cookingMethodFilterOptions.state === 'hasValue' && cookingMethodFilterOptions.contents.filter((option) => option.key === item.method)[0].value}
-              </Tag>
-              {item.ingredients.map((ingredient: ingredient, index: number) => {
+              <Tag color="geekblue">{item.method.name}</Tag>
+
+              {item.ingredients.map((ingredient, index) => {
                 return (
                   <Tag key={index} color="green">
                     {ingredient.name}
                   </Tag>
                 );
               })}
-              <Tag color="volcano">
-                {sauceFilterOptions.state === 'hasValue' && sauceFilterOptions.contents.filter((option) => option.key === item.base)[0].value}
-              </Tag>
+
+              {item.sauces.map((sauce, index) => {
+                return (
+                  <Tag key={index} color="volcano">
+                    {sauce.name}
+                  </Tag>
+                );
+              })}
             </div>
           </List.Item>
         )}

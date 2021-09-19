@@ -33,12 +33,12 @@ export const ingredientSearchKeyword = atom<string>({
   default: '',
 });
 
-export const cookingMethodFilter = atom<string[]>({
+export const cookingMethodFilter = atom<number[]>({
   key: 'cookingMethodFilter',
   default: [],
 });
 
-export const sauceFilter = atom<string[]>({
+export const sauceFilter = atom<number[]>({
   key: 'sauceFilter',
   default: [],
 });

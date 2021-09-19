@@ -16,11 +16,11 @@ const Filter = () => {
   };
 
   const cookingMethodOptionSelectHandler = (values: CheckboxValueType[]): void => {
-    setSelectedCookingMethodFilter([...(values as string[])]);
+    setSelectedCookingMethodFilter([...(values as number[])]);
   };
 
   const sauceOptionSelectHandler = (values: CheckboxValueType[]): void => {
-    setSelectedSauceFilter([...(values as string[])]);
+    setSelectedSauceFilter([...(values as number[])]);
   };
 
   const optionsComponent = (options: filterOption[]) => {
@@ -28,7 +28,7 @@ const Filter = () => {
       return (
         <Row key={index}>
           <Col>
-            <Checkbox value={option.key}>{option.value}</Checkbox>
+            <Checkbox value={option.id}>{option.name}</Checkbox>
           </Col>
         </Row>
       );

@@ -9,8 +9,8 @@ type selectorMapper<Type> = {
 interface IStoreParam {
   mapBounds: number[];
   ingredientName: string | null;
-  cookingMethodFilterOptionKeys: string[];
-  sauceFilterOptionKeys: string[];
+  cookingMethodFilterOptionKeys: number[];
+  sauceFilterOptionKeys: number[];
 }
 
 export const storesState = selectorFamily<store[], selectorMapper<IStoreParam>>({
@@ -22,7 +22,7 @@ export const storesState = selectorFamily<store[], selectorMapper<IStoreParam>>(
           geoBoundary: param.mapBounds.join(','),
           ingredientName: param.ingredientName,
           method: param.cookingMethodFilterOptionKeys.join(','),
-          base: param.sauceFilterOptionKeys.join(','),
+          sauce: param.sauceFilterOptionKeys.join(','),
         },
       });
 

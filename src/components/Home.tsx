@@ -36,8 +36,7 @@ const Home = () => {
               {selectedCookingMethodFilter.map((cookingMethod, index) => {
                 return (
                   <Tag color="geekblue" key={index}>
-                    {cookingMethodFilterOptions.state === 'hasValue' &&
-                      cookingMethodFilterOptions.contents.filter((option) => option.key === cookingMethod)[0].value}
+                    {cookingMethodFilterOptions.state === 'hasValue' && cookingMethodFilterOptions.contents.find((option) => option.id === cookingMethod)?.name}
                   </Tag>
                 );
               })}
@@ -45,7 +44,7 @@ const Home = () => {
               {selectedSauceFilter.map((sauce, index) => {
                 return (
                   <Tag color="volcano" key={index}>
-                    {sauceFilterOptions.state === 'hasValue' && sauceFilterOptions.contents.filter((option) => option.key === sauce)[0].value}
+                    {sauceFilterOptions.state === 'hasValue' && sauceFilterOptions.contents.find((option) => option.id === sauce)?.name}
                   </Tag>
                 );
               })}
