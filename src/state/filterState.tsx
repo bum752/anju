@@ -9,7 +9,7 @@ export const cookingMethodFilterOptionsState = selector<filterOption[]>({
 
     if (cookingMethodFilterOptions) return JSON.parse(cookingMethodFilterOptions);
 
-    const response = await axios.get('/food/methods');
+    const response = await axios.get('/methods');
     localStorage.setItem('cookingMethodFilterOptions', JSON.stringify(response.data));
     return response.data;
   },
@@ -22,7 +22,7 @@ export const sauceFilterOptionsState = selector<filterOption[]>({
 
     if (sauceFilterOptions) return JSON.parse(sauceFilterOptions);
 
-    const response = await axios.get('/food/bases');
+    const response = await axios.get('/sauces');
     localStorage.setItem('sauceFilterOptions', JSON.stringify(response.data));
     return response.data;
   },
