@@ -15,15 +15,15 @@ export const cookingMethodFilterOptionsState = selector<filterOption[]>({
   },
 });
 
-export const sourceFilterOptionsState = selector<filterOption[]>({
-  key: 'sourceFilterOptionsState',
+export const sauceFilterOptionsState = selector<filterOption[]>({
+  key: 'sauceFilterOptionsState',
   get: async () => {
-    const sourceFilterOptions = localStorage.getItem('sourceFilterOptions');
+    const sauceFilterOptions = localStorage.getItem('sauceFilterOptions');
 
-    if (sourceFilterOptions) return JSON.parse(sourceFilterOptions);
+    if (sauceFilterOptions) return JSON.parse(sauceFilterOptions);
 
     const response = await axios.get('/food/bases');
-    localStorage.setItem('sourceFilterOptions', JSON.stringify(response.data));
+    localStorage.setItem('sauceFilterOptions', JSON.stringify(response.data));
     return response.data;
   },
 });
@@ -38,7 +38,7 @@ export const cookingMethodFilter = atom<string[]>({
   default: [],
 });
 
-export const sourceFilter = atom<string[]>({
-  key: 'sourceFilter',
+export const sauceFilter = atom<string[]>({
+  key: 'sauceFilter',
   default: [],
 });

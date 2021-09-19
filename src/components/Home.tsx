@@ -3,7 +3,7 @@ import Map from './Map';
 import Store from './Store';
 import Filter from './Filter';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
-import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sourceFilter, sourceFilterOptionsState } from '../state/filterState';
+import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sauceFilter, sauceFilterOptionsState } from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
 import { storeSiderComponentCollapseState } from '../state/componentState';
 import { FilterOutlined } from '@ant-design/icons';
@@ -13,14 +13,14 @@ const { Text } = Typography;
 
 const Home = () => {
   const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
-  const sourceFilterOptions = useRecoilValueLoadable(sourceFilterOptionsState);
+  const sauceFilterOptions = useRecoilValueLoadable(sauceFilterOptionsState);
   const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
   const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeyword);
-  const [selectedSourceFilter] = useRecoilState(sourceFilter);
+  const [selectedSauceFilter] = useRecoilState(sauceFilter);
   const [selectedStore] = useRecoilState(selectedStoreState);
   const [storeComponentCollapse, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
 
-  const selectedTotalFiltersCount = enteredIngredientSearchKeyword ? 1 : 0 + selectedCookingMethodFilter.length + selectedSourceFilter.length;
+  const selectedTotalFiltersCount = enteredIngredientSearchKeyword ? 1 : 0 + selectedCookingMethodFilter.length + selectedSauceFilter.length;
 
   return (
     <>
@@ -42,10 +42,10 @@ const Home = () => {
                 );
               })}
 
-              {selectedSourceFilter.map((source, index) => {
+              {selectedSauceFilter.map((sauce, index) => {
                 return (
                   <Tag color="volcano" key={index}>
-                    {sourceFilterOptions.state === 'hasValue' && sourceFilterOptions.contents.filter((option) => option.key === source)[0].value}
+                    {sauceFilterOptions.state === 'hasValue' && sauceFilterOptions.contents.filter((option) => option.key === sauce)[0].value}
                   </Tag>
                 );
               })}

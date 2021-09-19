@@ -1,15 +1,15 @@
 import { Checkbox, Col, Input, Row } from 'antd';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
-import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sourceFilter, sourceFilterOptionsState } from '../state/filterState';
+import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sauceFilter, sauceFilterOptionsState } from '../state/filterState';
 import { filterOption } from '../types/filter';
 
 const Filter = () => {
   const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
-  const sourceFilterOptions = useRecoilValueLoadable(sourceFilterOptionsState);
+  const sauceFilterOptions = useRecoilValueLoadable(sauceFilterOptionsState);
   const [ingredientNameSearchKeyword, setIngredientNameSearchKeyword] = useRecoilState(ingredientSearchKeyword);
   const [, setSelectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
-  const [, setSelectedSourceFilter] = useRecoilState(sourceFilter);
+  const [, setSelectedSauceFilter] = useRecoilState(sauceFilter);
 
   const ingredientNameInputHandler = (event: React.FormEvent<HTMLInputElement>): void => {
     setIngredientNameSearchKeyword(event.currentTarget.value);
@@ -19,8 +19,8 @@ const Filter = () => {
     setSelectedCookingMethodFilter([...(values as string[])]);
   };
 
-  const sourceOptionSelectHandler = (values: CheckboxValueType[]): void => {
-    setSelectedSourceFilter([...(values as string[])]);
+  const sauceOptionSelectHandler = (values: CheckboxValueType[]): void => {
+    setSelectedSauceFilter([...(values as string[])]);
   };
 
   const optionsComponent = (options: filterOption[]) => {
@@ -53,8 +53,8 @@ const Filter = () => {
       <Row>
         <Col span={8}>소스</Col>
         <Col>
-          <Checkbox.Group onChange={sourceOptionSelectHandler}>
-            {sourceFilterOptions.state === 'hasValue' && optionsComponent(sourceFilterOptions.contents)}
+          <Checkbox.Group onChange={sauceOptionSelectHandler}>
+            {sauceFilterOptions.state === 'hasValue' && optionsComponent(sauceFilterOptions.contents)}
           </Checkbox.Group>
         </Col>
       </Row>

@@ -3,13 +3,13 @@ import { List, Rate, Tag, Typography } from 'antd';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import moneyFormatter from '../formatters/moneyFormatter';
 import { storeSiderComponentCollapseState } from '../state/componentState';
-import { cookingMethodFilterOptionsState, sourceFilterOptionsState } from '../state/filterState';
+import { cookingMethodFilterOptionsState, sauceFilterOptionsState } from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
 import { menu, ingredient } from '../types/store';
 
 const Store = () => {
   const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
-  const sourceFilterOptions = useRecoilValueLoadable(sourceFilterOptionsState);
+  const sauceFilterOptions = useRecoilValueLoadable(sauceFilterOptionsState);
   const [selectedStore, setSelectedStore] = useRecoilState(selectedStoreState);
   const [, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
 
@@ -53,7 +53,7 @@ const Store = () => {
                 );
               })}
               <Tag color="volcano">
-                {sourceFilterOptions.state === 'hasValue' && sourceFilterOptions.contents.filter((option) => option.key === item.base)[0].value}
+                {sauceFilterOptions.state === 'hasValue' && sauceFilterOptions.contents.filter((option) => option.key === item.base)[0].value}
               </Tag>
             </div>
           </List.Item>
