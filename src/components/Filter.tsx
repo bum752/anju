@@ -1,15 +1,21 @@
 import { Checkbox, Col, Input, Row } from 'antd';
 import { CheckboxValueType } from 'antd/lib/checkbox/Group';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
-import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sauceFilter, sauceFilterOptionsState } from '../state/filterState';
+import {
+  cookingMethodFilterState,
+  cookingMethodFilterOptionsState,
+  ingredientSearchKeywordState,
+  sauceFilterState,
+  sauceFilterOptionsState,
+} from '../state/filterState';
 import { filterOption } from '../types/filter';
 
 const Filter = () => {
   const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
   const sauceFilterOptions = useRecoilValueLoadable(sauceFilterOptionsState);
-  const [ingredientNameSearchKeyword, setIngredientNameSearchKeyword] = useRecoilState(ingredientSearchKeyword);
-  const [, setSelectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
-  const [, setSelectedSauceFilter] = useRecoilState(sauceFilter);
+  const [ingredientNameSearchKeyword, setIngredientNameSearchKeyword] = useRecoilState(ingredientSearchKeywordState);
+  const [, setSelectedCookingMethodFilter] = useRecoilState(cookingMethodFilterState);
+  const [, setSelectedSauceFilter] = useRecoilState(sauceFilterState);
 
   const ingredientNameInputHandler = (event: React.FormEvent<HTMLInputElement>): void => {
     setIngredientNameSearchKeyword(event.currentTarget.value);

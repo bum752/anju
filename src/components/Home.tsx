@@ -3,7 +3,13 @@ import Map from './Map';
 import Store from './Store';
 import Filter from './Filter';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
-import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchKeyword, sauceFilter, sauceFilterOptionsState } from '../state/filterState';
+import {
+  cookingMethodFilterState,
+  cookingMethodFilterOptionsState,
+  ingredientSearchKeywordState,
+  sauceFilterState,
+  sauceFilterOptionsState,
+} from '../state/filterState';
 import { selectedStoreState } from '../state/storeState';
 import { storeSiderComponentCollapseState } from '../state/componentState';
 import { FilterOutlined } from '@ant-design/icons';
@@ -15,9 +21,9 @@ const { Text } = Typography;
 const Home = () => {
   const cookingMethodFilterOptions = useRecoilValueLoadable(cookingMethodFilterOptionsState);
   const sauceFilterOptions = useRecoilValueLoadable(sauceFilterOptionsState);
-  const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
-  const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeyword);
-  const [selectedSauceFilter] = useRecoilState(sauceFilter);
+  const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeywordState);
+  const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilterState);
+  const [selectedSauceFilter] = useRecoilState(sauceFilterState);
   const [selectedStore] = useRecoilState(selectedStoreState);
   const [storeComponentCollapse, setStoreComponentCollapse] = useRecoilState(storeSiderComponentCollapseState);
 

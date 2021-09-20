@@ -3,7 +3,7 @@ import { message } from 'antd';
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import { storeSiderComponentCollapseState } from '../state/componentState';
-import { ingredientSearchKeyword, cookingMethodFilter, sauceFilter } from '../state/filterState';
+import { ingredientSearchKeywordState, cookingMethodFilterState, sauceFilterState } from '../state/filterState';
 import { selectedStoreState, storesState } from '../state/storeState';
 import { store } from '../types/store';
 
@@ -18,9 +18,9 @@ const Map = ({ height }: IMap) => {
   const [markers, setMarkers] = useState<any[]>([]);
   const [mapBoundChanged, setMapBoundChanged] = useState<boolean>(false);
   const [mapBounds, setMapBounds] = useState<number[]>([]);
-  const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeyword);
-  const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilter);
-  const [selectedSauceFilter] = useRecoilState(sauceFilter);
+  const [enteredIngredientSearchKeyword] = useRecoilState(ingredientSearchKeywordState);
+  const [selectedCookingMethodFilter] = useRecoilState(cookingMethodFilterState);
+  const [selectedSauceFilter] = useRecoilState(sauceFilterState);
   const stores = useRecoilValueLoadable(
     storesState({
       mapBounds,

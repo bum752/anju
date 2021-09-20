@@ -18,17 +18,17 @@ export const sauceFilterOptionsState = selector<filterOption[]>({
   },
 });
 
-export const ingredientSearchKeyword = atom<string>({
-  key: 'ingredientSearchKeyword',
+export const ingredientSearchKeywordState = atom<string>({
+  key: 'ingredientSearchKeywordState',
   default: '',
 });
 
-export const cookingMethodFilter = atom<number[]>({
-  key: 'cookingMethodFilter',
+export const cookingMethodFilterState = atom<number[]>({
+  key: 'cookingMethodFilterState',
   default: [],
 });
 
-export const sauceFilter = atom<number[]>({
-  key: 'sauceFilter',
+export const sauceFilterState = atom<number[]>({
+  key: 'sauceFilterState',
   default: [],
 });
