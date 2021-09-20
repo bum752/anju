@@ -7,6 +7,7 @@ import { cookingMethodFilter, cookingMethodFilterOptionsState, ingredientSearchK
 import { selectedStoreState } from '../state/storeState';
 import { storeSiderComponentCollapseState } from '../state/componentState';
 import { FilterOutlined } from '@ant-design/icons';
+import Suggestion from './Suggestion';
 
 const { Header, Content, Sider } = Layout;
 const { Text } = Typography;
@@ -24,6 +25,7 @@ const Home = () => {
 
   return (
     <>
+      <Suggestion />
       <Layout>
         <Header style={{ display: 'table' }}>
           <Row>
